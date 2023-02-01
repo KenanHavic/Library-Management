@@ -9,11 +9,11 @@ private:
 string ISBN, title, author, publisher, categories;
 
 public:
-void setISBN(string a) { ISBN = a; }
-void setTitle(string b) { title = b; }
-void setAuthor(string c) { author = c; }
-void setPublisher(string d) { publisher = d; }
-void setCategories(string e) { categories = e; }
+void setISBN(string id) { ISBN = id; }
+void setTitle(string nameOfBook) { title = nameOfBook; }
+void setAuthor(string writer) { author = writer; }
+void setPublisher(string creator) { publisher = creator; }
+void setCategories(string category) { categories = category; }
 string getISBN() { return ISBN; }
 string getTitle() { return title; }
 string getAuthor() { return author; }
@@ -80,16 +80,15 @@ User users[10];
 
 int main() {
 int choice;
-system("CLS");
+
 displayMainMenu();
 cin >> choice;
-system("CLS");
-bool exit{false};
+
+bool quit{false};
 
 do {
     switch (choice) {
     case 1:
-        system("CLS");
         cout << "USER\n\n";
         cout << "[1] ADD USER\n";
         cout << "[2] EDIT USER\n";
@@ -100,7 +99,7 @@ do {
         int selection;
         cout << "Enter selection: \n";
         cin >> selection;
-        system("CLS");
+
 
         switch (selection) {
         case 1:
@@ -121,17 +120,15 @@ do {
      	main();
      	break;
      	case 6:
-     		quit();
+     		quit=true;
      		break;
      		default:
-     			cout<<"Invalid entry.\n\n Press any key to continue..."<<endl;
-     			_getch();
-
+     			cout<<"Invalid entry."<<endl;
      			main();
      			break;
      		}
 
-
+break;
 
 case 2:
 
@@ -145,7 +142,7 @@ cout << "[6] BACK TO MAIN\n";
 cout << "[7] EXIT\n";
 cout << "Enter selection: \n";
 cin >> selection;
-system("CLS");
+
         switch (selection) {
         case 1:
             addBook(bookCounter);
@@ -169,29 +166,27 @@ system("CLS");
 
             break;
         case 7:
-            quit();
+            quit=true;
 
             break;
             default:
-            	cout<<"Invalid entry.\n\n Press any key to continue..."<<endl;
-            	_getch();
+            	cout<<"Invalid entry."<<endl;
             	main();
             	break;
         }
 
     case 3:
-        quit();
+        quit=true;
         break;
         default:
-        	cout<<"Invalid entry!\n\n Press any key to continue..."<<endl;
-        	_getch();
+        	cout<<"Invalid entry!"<<endl;
         	main();
     }
     break;
-} while (!exit); {
-cout<<"End."<<endl;}
+} while (!quit); {
+cout<<"Thanks for using our library management."<<endl;}
 
-_getch();
+
 return 0;
 }
 
@@ -226,14 +221,12 @@ users[userCounter].setFirstName(firstName);
 users[userCounter].setLastName(lastName);
 users[userCounter].setJMBG(JMBG);
 increment1(userCounter);
-cout << "\nUser added successfully.\n\n Press any key to continue..."<<endl;
-_getch();
+cout << "\nUser added successfully."<<endl;
 main();
 
 }
 else {
-	cout<<"You have reached the maximum number of users that can be added!\n\n Press any key to continue... "<<endl;
-	_getch();
+	cout<<"You have reached the maximum number of users that can be added!"<<endl;
 	main();
 }
 }
@@ -242,8 +235,7 @@ void editUser(int userCounter) {
 string editjmbg, JMBG,firstName,lastName,choice;
 cout << "EDIT USER\n\n";
 if(userCounter==0){
-		cout<<"There are no users to edit!\n\n Press any key to continue . . ."<<endl;
-		_getch();
+		cout<<"There are no users to edit!"<<endl;
 		main();
 	}
 	cout<<"Enter JMBG: ";
@@ -275,8 +267,7 @@ for (int i = 0; i < userCounter; i++) {
             users[i].setFirstName(firstName);
             users[i].setLastName(lastName);
             users[i].setJMBG(JMBG);
-            cout<<"User edited successfully!\n\n Press any key to continue..."<<endl;
-            _getch();
+            cout<<"User edited successfully!"<<endl;
             main();
         }
     } else {
@@ -285,15 +276,13 @@ for (int i = 0; i < userCounter; i++) {
 
 }
 }
-cout<<"\n User not found.\n\n Press any key to continue..."<<endl;
-_getch();
+cout<<"\n User not found."<<endl;
 main();
 }
 void viewAllUsers(int userCounter) {
 cout << "VIEW ALL USERS\n\n";
 if(userCounter==0) {
-			cout<<"There are currently no users added.\n\n Press any key to continue... "<<endl;
-			_getch();
+			cout<<"There are currently no users added."<<endl;
 			main();
 		}
 for (int i = 0; i < userCounter; i++) {
@@ -303,8 +292,6 @@ for (int i = 0; i < userCounter; i++) {
     cout << "JMBG: " << users[i].getJMBG() << endl;
 
 }
-cout<<"Press any key to continue...";
-_getch();
 main();
 }
 void deleteUser(int userCounter) {
@@ -312,8 +299,7 @@ string JMBG;
 int choice;
 cout << "DELETE USER\n\n";
 if(userCounter==0){
-		cout<<"There are no users to delete!\n\nPress any key to continue . . .";
-		_getch();
+		cout<<"There are no users to delete!";
 		main();
 	}
 cout << "Enter JMBG: ";
@@ -336,8 +322,7 @@ for (int i = 0; i < userCounter; i++) {
 			users[9].setLastName("");
 			users[9].setJMBG("");
 			decrement1(userCounter);
-			cout<<"User successfully deleted.\n\nPress any key to continue...";
-			_getch();
+			cout<<"User successfully deleted.";
 			main();
 		}
 		else {
@@ -345,8 +330,7 @@ for (int i = 0; i < userCounter; i++) {
 		}
     }
 }
-cout<<"\nUser not found!\n\nPress any key to continue...";
-_getch();
+cout<<"\nUser not found!";
 main();
 
 
@@ -383,12 +367,11 @@ books[bookCounter].setAuthor(author);
 books[bookCounter].setPublisher(publisher);
 books[bookCounter].setCategories(categories);
 increment(bookCounter);
-cout << "\nBook added successfully.\n\n Press any key to continue...";
-_getch();
+cout << "\nBook added successfully.";
+
 main();
 } else {
-	cout<<"YOU HAVE REACHED THE MAXIMUM NUMBER OF BOOKS THAT CAN BE ADDED!\n\nPress any key to continue...";
-	_getch();
+	cout<<"YOU HAVE REACHED THE MAXIMUM NUMBER OF BOOKS THAT CAN BE ADDED!";
 	main();
 }
 }
@@ -397,8 +380,7 @@ string ISBN;
 int choice;
 cout << "DELETE BOOK\n\n";
 if(bookCounter==0) {
-	cout<<"NO BOOK TO DELETE!\n\nPress any key to continue...";
-	_getch();
+	cout<<"NO BOOK TO DELETE!";
 	main();
 }
 cout << "Enter ISBN: ";
@@ -425,29 +407,27 @@ for (int i = 0; i < bookCounter; i++) {
 			books[9].setPublisher("");
 			books[9].setCategories("");
 			decrement(bookCounter);
-			cout<<"The book was successfully deleted.\n\nPress any key to continue...";
-			_getch();
+			cout<<"The book was successfully deleted.";
+
 			main();
 		} else {
 			main();
 		}
     }
 }
-    cout<<"\nBook not found.\n\nPress any key to continue...";
-    _getch();
+    cout<<"\nBook not found.";
     main();
 
 
 
 }
 void editBook(int bookCounter) {
-	system("CLS");
+
 string ISBN, title, author, publisher, categories;
 string editIsbn,choice;
 cout << "EDIT BOOK\n\n";
 if(bookCounter==0) {
-	cout<<"There is no book to edit.\n\nPress any key to continue...";
-	_getch();
+	cout<<"There is no book to edit.\n\n";
 	main();
 }
 cout << "Enter ISBN: ";
@@ -488,16 +468,14 @@ for (int i = 0; i < bookCounter; i++) {
 			books[i].setAuthor(author);
 			books[i].setPublisher(publisher);
 			books[i].setCategories(categories);
-			cout<<"\nThe book has been successfully edited.\n\nPress any key to continue...";
-			_getch();
+			cout<<"\nThe book has been successfully edited.";
 			main();
 		} else {
 			main();
 		}
     }
 }
-cout<<"\nBook not found.\n\nPress any key to continue...";
-_getch();
+cout<<"\nBook not found.";
 main();
 
 }
@@ -508,8 +486,7 @@ bool print=false;
 
 cout << "SEARCH BOOK\n\n";
 if(bookCounter==0) {
-	cout<<"There is no book to search.\n\nPress any key to continue...";
-	_getch();
+	cout<<"There is no book to search.";
 	main();
 }
 cout << "Enter ISBN: ";
@@ -526,19 +503,17 @@ for (int i = 0; i < bookCounter; i++) {
 }
 
 if (print) {
-    cout << "\nPress any key to continue..";
-    _getch();
+
     main();
 } else{
-	cout<<"\nBook not found.\n\nPress any key to continue...";
-	_getch();
+	cout<<"\nBook not found.";
+
 	main();
 }
 }
 void viewAllBooks(int bookCounter) {
 	if(bookCounter==0) {
-		cout<<"There are currently no books added.\n\nPress any key to continue...";
-		_getch();
+		cout<<"There are currently no books added.";
 		main();
 	}
 
@@ -551,13 +526,9 @@ for (int i = 0; i < bookCounter; i++) {
     cout << "Categories: " << books[i].getCategories() << endl;
     cout << endl;
 }
-cout<<"Press any key to continue...";
-_getch();
+
 main();
 }
-void quit() {
-cout << "Thank you for using the library management system.\n";
-_exit(1);
-}
+
 
 
