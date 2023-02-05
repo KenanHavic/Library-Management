@@ -9,8 +9,8 @@ private:
 string ISBN, title, author, publisher, categories;
 
 public:
-void setISBN(string id) { ISBN = id; }
-void setTitle(string nameOfBook) { title = nameOfBook; }
+void setISBN(string ISBN) { this->ISBN = ISBN; }
+void setTitle(string title) { this->title = title; }
 void setAuthor(string writer) { author = writer; }
 void setPublisher(string creator) { publisher = creator; }
 void setCategories(string category) { categories = category; }
