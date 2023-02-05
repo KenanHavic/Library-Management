@@ -19,6 +19,21 @@ string getTitle() { return title; }
 string getAuthor() { return author; }
 string getPublisher() { return publisher; }
 string getCategories() { return categories; }
+
+void clearBook() {
+    updateBook("", "", "", "", "");
+
+}
+
+void updateBook(string isbn, string title, string author, string publisher, string categories) {
+    setISBN(isbn);
+    setTitle(title);
+    setAuthor(author);
+    setPublisher(publisher);
+    setCategories(categories);
+}
+
+
 };
 class User {
 private:
@@ -345,21 +360,19 @@ if(bookCounter<10) {
 while(ISBN.length() != 5) {
             cout<<"- Enter ISBN: ";
             cin>>ISBN;
-
             if(ISBN.length() != 5) {
-                cout<<"ISBN must be 5 digits "<<endl;
-                cout<<"Enter ISBN again: ";
-                cin>>ISBN;
+                cout<< "Isbn mora biti jednak 5 karaktera..";
             }
         }
+cin.ignore();
 cout << "Enter title: ";
-cin >> title;
+getline(cin, title);
 cout << "Enter author: ";
-cin >> author;
+getline(cin, author);
 cout << "Enter publisher: ";
-cin >> publisher;
+getline(cin, publisher);
 cout << "Enter categories: ";
-cin >> categories;
+getline(cin, categories);
 
 books[bookCounter].setISBN(ISBN);
 books[bookCounter].setTitle(title);
@@ -393,19 +406,11 @@ for (int i = 0; i < bookCounter; i++) {
         cout<<"Do you want to delete?\n[1]Yes\n[2]No\nEnter choice: ";
         cin>>choice;
         if(choice==1) {
-        	books[i].setISBN("");
-        	books[i].setTitle("");
-        	books[i].setAuthor("");
-        	books[i].setPublisher("");
-        	books[i].setCategories("");
+            books[i].clearBook();
         	for(int a=i;a<bookCounter;a++) {
         		books[a]=books[a+1];
 			}
-			books[9].setISBN("");
-			books[9].setTitle("");
-			books[9].setAuthor("");
-			books[9].setPublisher("");
-			books[9].setCategories("");
+			books[9].clearBook();
 			decrement(bookCounter);
 			cout<<"The book was successfully deleted.";
 
@@ -529,6 +534,7 @@ for (int i = 0; i < bookCounter; i++) {
 
 main();
 }
+
 
 
 
