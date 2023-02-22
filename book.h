@@ -4,6 +4,7 @@
 #include <iostream>
 #include <conio.h>
 using namespace std;
+
 class Book {
         private:
             string ISBN, title, author, publisher, categories;
@@ -22,11 +23,11 @@ class Book {
 
             bool isEqualTo(string ISBN) {
                 this->ISBN == ISBN;
-                }
+            }
 
             void clearBook() {
                 updateBook("", "", "", "", "");
-                }
+            }
 
             void updateBook(string isbn, string title, string author, string publisher, string categories) {
                     setISBN(isbn);
@@ -34,7 +35,7 @@ class Book {
                     setAuthor(author);
                     setPublisher(publisher);
                     setCategories(categories);
-    }
+    		}
 
 };
 #endif

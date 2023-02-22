@@ -8,17 +8,15 @@ using namespace std;
 class User {
         private:
             string firstName, lastName;
-            string JMBG;
+            string ID;
 
         public:
-        //setter
-        void setFirstName(string firstName) { this->firstName=firstName; }
-        void setLastName(string lastName) { this->lastName=lastName; }
-        void setJMBG(string JMBG) { this->JMBG=JMBG; }
-        //getters
+        	void setFirstName(string firstName) { this->firstName=firstName; }
+        	void setLastName(string lastName) { this->lastName=lastName; }
+        	void setID(string ID) { this->ID=ID; }
 
-        string getFirstName() { return firstName; }
-        string getLastName() { return lastName; }
-        string getJMBG() { return JMBG; }
+        	string getFirstName() { return firstName; }
+        	string getLastName() { return lastName; }
+        	string getID() { return ID; }
 };
 #endif

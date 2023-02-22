@@ -7,6 +7,8 @@
 using namespace std;
 class Bookmark {
         public:
+        	Book books[10];
+    		User users[10];
             void displayMainMenu();
             void addUser(int userCounter);
             void editUser(int userCounter);
@@ -21,33 +23,30 @@ class Bookmark {
             void displayTopBooks();
 
 
-//counter for book array and user array
+
     int bookCounter = 0;
-    int userCounter=0;
+    int userCounter = 0;
 
-//function to increase counter
-    void increment(int a) {
-        bookCounter = ++a;
+
+    void incrementBook(int counterBook) {
+        bookCounter = ++counterBook;
     }
 
-    void increment1(int b) {
-        userCounter= ++b;
-    }
-//function to decrease counter
-    void decrement(int a) {
-        bookCounter = --a;
+    void incrementUser(int counterUser) {
+        userCounter= ++counterUser;
     }
 
-    void decrement1(int b){
-        userCounter= --b;
-
-
+    void decrementBook(int counterBook) {
+        bookCounter = --counterBook;
     }
 
+    void decrementUser(int counterUser){
+        userCounter= --counterUser;
+	}
 
-//limiting number of entered books, sve premjesti u bookmark klasu
-    Book books[10];
-    User users[10];
+
+
+    
 
 
 
