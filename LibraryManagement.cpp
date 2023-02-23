@@ -1,342 +1,316 @@
 #include <iostream>
 #include <string>
 #include <conio.h>
+#include <cstdlib>
+#include <ctime>
+#include "book.h"
+#include "user.h"
+#include "bookmark.h"
+#include "Menu.h"
+
 
 using namespace std;
 
-class Book {
-private:
-string ISBN, title, author, publisher, categories;
-
-public:
-void setISBN(string ISBN) { this->ISBN = ISBN; }
-void setTitle(string title) { this->title = title; }
-void setAuthor(string writer) { author = writer; }
-void setPublisher(string creator) { publisher = creator; }
-void setCategories(string category) { categories = category; }
-string getISBN() { return ISBN; }
-string getTitle() { return title; }
-string getAuthor() { return author; }
-string getPublisher() { return publisher; }
-string getCategories() { return categories; }
-
-void clearBook() {
-    updateBook("", "", "", "", "");
-
+bool isLoggedIn() {
+    static bool loggedIn = false;
+    return loggedIn;
 }
 
-void updateBook(string isbn, string title, string author, string publisher, string categories) {
-    setISBN(isbn);
-    setTitle(title);
-    setAuthor(author);
-    setPublisher(publisher);
-    setCategories(categories);
-}
-
-
-};
-class User {
-private:
-string firstName, lastName;
-string JMBG;
-
-public:
-//setter
-void setFirstName(string name) { firstName = name; }
-void setLastName(string surname) { lastName = surname; }
-void setJMBG(string j) { JMBG = j; }
-//getters
-
-string getFirstName() { return firstName; }
-string getLastName() { return lastName; }
-string getJMBG() { return JMBG; }
-};
-
-void displayMainMenu();
-void addUser(int userCounter);
-void editUser(int userCounter);
-void viewAllUsers(int userCounter);
-void deleteUser(int userCounter);
-
-void addBook(int bookCounter);
-void deleteBook(int bookCounter);
-void editBook(int bookCounter);
-void searchBook(int bookCounter);
-void viewAllBooks(int bookCounter);
-void quit();
-
-//counter for book array and user array
-int bookCounter = 0;
-int userCounter=0;
-
-//function to increase counter
-void increment(int a) {
-a++;
-bookCounter = a;
-}
-void increment1(int b) {
-	b++;
-	userCounter=b;
-}
-//function to decrease counter
-void decrement(int a) {
-a--;
-bookCounter = a;
-}
-void decrement1(int b){
-	b--;
-	userCounter=b;
-}
-
-
-//limiting number of entered books
-Book books[10];
-User users[10];
+Menu menu;
+Bookmark bookMark;
 
 int main() {
-int choice;
+	bool quit{false};
+int choose;
+	string username,password;
+    bool isPremium=false;
+    
 
-displayMainMenu();
-cin >> choice;
-
-bool quit{false};
-
-do {
-    switch (choice) {
-    case 1:
-        cout << "USER\n\n";
-        cout << "[1] ADD USER\n";
-        cout << "[2] EDIT USER\n";
-        cout << "[3] DELETE USER\n";
-        cout << "[4] VIEW ALL USERS\n";
-        cout << "[5] BACK TO MAIN\n";
-        cout << "[6] EXIT\n";
-        int selection;
-        cout << "Enter selection: \n";
-        cin >> selection;
-
-
-        switch (selection) {
-        case 1:
-            addUser(userCounter);
-
-            break;
-        case 2:
-            editUser(userCounter);
-            break;
-        case 3:
-            deleteUser(userCounter);
-
-            break;
-        case 4:
-            viewAllUsers(userCounter);
-            break;
-     case 5:
-     	main();
-     	break;
-     	case 6:
-     		quit=true;
-     		break;
-     		default:
-     			cout<<"Invalid entry."<<endl;
-     			main();
-     			break;
-     		}
-
-break;
-
-case 2:
-
-cout << "BOOK\n\n";
-cout << "[1] ADD BOOK\n";
-cout << "[2] DELETE BOOK\n";
-cout << "[3] EDIT BOOK\n";
-cout << "[4] SEARCH BOOK\n";
-cout << "[5] VIEW ALL BOOKS\n";
-cout << "[6] BACK TO MAIN\n";
-cout << "[7] EXIT\n";
-cout << "Enter selection: \n";
-cin >> selection;
-
-        switch (selection) {
-        case 1:
-            addBook(bookCounter);
-
-            break;
-        case 2:
-            deleteBook(bookCounter);
-
-            break;
-        case 3:
-            editBook(bookCounter);
-            break;
-        case 4:
-            searchBook(bookCounter);
-            break;
-        case 5:
-            viewAllBooks(bookCounter);
-            break;
-        case 6:
-            main();
-
-            break;
-        case 7:
-            quit=true;
-
-            break;
-            default:
-            	cout<<"Invalid entry."<<endl;
-            	main();
-            	break;
+    cout<<"Enter username: ";
+    cin>>username;
+    while(password.length() < 8) {
+            cout<<"Enter password: ";
+            cin>>password;
+            if(password.length() < 8) {
+                cout<< "Password must contain 8 or more characters..\n";
+            }
         }
 
-    case 3:
-        quit=true;
-        break;
-        default:
-        	cout<<"Invalid entry!"<<endl;
-        	main();
-    }
-    break;
-} while (!quit); {
-cout<<"Thanks for using our library management."<<endl;}
+    char userType;
+    cout<<"Select user type(P for premium, R for regular): ";
+    cin>>userType;
 
 
-return 0;
-}
+    if(userType=='P' || userType=='p') {
+    	isPremium=true;
+    	cout<<"Welcome, "<<username<<"!"<<endl;
+    	cout<<"You are a premium user."<<endl;
+    	menu.displayMainMenu();
+        cin>>choose;
 
-void displayMainMenu() {
-cout << "LIBRARY MANAGEMENT\n\n";
-cout << "[1] USER\n";
-cout << "[2] BOOK\n";
-cout << "[3] EXIT\n\n";
-cout << "ENTER SELECTION: ";
-}
-void addUser(int userCounter) {
-string firstName, lastName, JMBG;
-if(userCounter < 10) {
+        do {
+        	switch(choose) {
+    			case 1:
+        			cout<<"USER\n";
+        			cout<<"[1]ADD USER\n";
+        			cout<<"[2]DELETE USER\n";
+        			cout<<"[3]EDIT USER\n";
+        			cout<<"[4]VIEW ALL USERS\n";
+        			cout<<"[5]EXIT\n";
+        		int selection;
+        			cout<<"Enter selection: ";
+        			cin>>selection;
+        		switch(selection) {
+        			case 1:
+        				bookMark.addUser(bookMark.userCounter);
+        				break;
+        			case 2:
+            			bookMark.deleteUser(bookMark.userCounter);
+            			break;
+        			case 3:
+            			bookMark.editUser(bookMark.userCounter);
+            			break;
+        			case 4:
+            			bookMark.viewAllUsers(bookMark.userCounter);
+            			break;
+        			case 5:
+            			quit=true;
+            			break;
+        			default:
+            			cout<<"Invalid input\n";
+            			break;
+        		}
+        		break;
+        			case 2:
+            			cout<<"BOOK\n";
+            			cout<<"[1]ADD BOOK\n";
+            			cout<<"[2]DELETE BOOK\n";
+            			cout<<"[3]EDIT BOOK\n";
+            			cout<<"[4]SEARCH BOOK\n";
+            			cout<<"[5]VIEW ALL BOOKS\n";
+            			cout<<"[6]TOP 3 BOOKS OF THE WEEK\n";
+            			cout<<"[7]EXIT\n";
+            	int choice;
+            		cout<<"Enter selection: ";
+            		cin>>choice;
+            	switch(choice) {
+        			case 1:
+            			bookMark.addBook(bookMark.bookCounter);
+            			break;
+        			case 2:
+            			bookMark.deleteBook(bookMark.bookCounter);
+            			break;
+        			case 3:
+            			bookMark.editBook(bookMark.bookCounter);
+            			break;
+        			case 4:
+            			bookMark.searchBook(bookMark.bookCounter);
+            			break;
+        			case 5:
+            			bookMark.viewAllBooks(bookMark.bookCounter);
+        			case 6:
+            			bookMark.displayTopBooks();
+            			main();
+            			break;
+        			default:
+            			cout<<"Invalid input\n";
+            			break;
+            	}
 
-cout << "ADD USER\n\n";
-cout << "Enter first name: ";
-cin >> firstName;
-cout << "Enter last name: ";
-cin >> lastName;
-while(JMBG.length() != 13) {
-            cout<<"- Enter JMBG: ";
-            cin>>JMBG;
+        			case 3:
+            			quit=true;
+            			break;
+        			default:
+            			cout<<"Invalid input";
+        	}
+        }while(!quit); {
+        		cout<<"Thanks for using our library management";}
 
-            if(JMBG.length() != 13) {
-                cout<<"JMBG must have 13 digits"<<endl;
-                cout<<"Enter JMBG again: ";
-                cin>>JMBG;
-            }
+
+
+
+	}else if(userType=='R' || userType=='r') {
+		cout<<"Welcome, "<<username<<"!"<<endl;
+		cout<<"You are a regular user."<<endl;
+		cout<<"[1]USER\n";
+		cout<<"[2]BOOK\n";
+		cout<<"[3]EXIT\n";
+		int choice;
+			cout<<"Enter selection: ";
+			cin>>choice;
+		switch(choice) {
+            case 1:
+                cout<<"USER\n";
+                cout<<"[1]VIEW ALL USERS\n";
+                cout<<"[2]EXIT\n";
+                int selection;
+                	cout<<"Enter selection: ";
+                	cin>>selection;
+                switch(selection) {
+            		case 1:
+                		bookMark.viewAllUsers(bookMark.userCounter);
+                		break;
+            		case 2:
+                		quit=true;
+                		break;
+            		default:
+                		cout<<"Invalid input.\n";
+                		break;
+                }
+
+            		case 2:
+                		cout<<"Book.\n";
+                		cout<<"[1]View All Books\n";
+                		cout<<"[2]EXIT\n";
+                int choice;
+                	cout<<"Enter selection: ";
+                	cin>>choice;
+                switch(choice) {
+            		case 1:
+                		bookMark.viewAllBooks(bookMark.bookCounter);
+                		break;
+            		case 2:
+                		quit=true;
+                		break;
+            		default:
+                		cout<<"Invalid input.\n";
+                		break;
+                }
+                }
+
 		}
 
-users[userCounter].setFirstName(firstName);
-users[userCounter].setLastName(lastName);
-users[userCounter].setJMBG(JMBG);
-increment1(userCounter);
-cout << "\nUser added successfully."<<endl;
-main();
+	 else {
+		cout<<"Invalid input."<<endl;
+	 }
+		return 0;
+
+	}
+
+
+
+
+
+void Bookmark::addUser(int userCounter) {
+    string firstName, lastName, ID;
+    if(userCounter < 10) {
+		cout << "ADD USER\n\n";
+    	cout << "Enter first name: ";
+    	cin >> firstName;
+    	cout << "Enter last name: ";
+    	cin >> lastName;
+    while(ID.length() != 13) {
+            cout<<"Enter ID: ";
+            cin>>ID;
+        if(ID.length() != 13) {
+            cout<<"ID must have 13 digits"<<endl;
+        }
+	}
+
+    bookMark.users[bookMark.userCounter].setFirstName(firstName);
+    bookMark.users[bookMark.userCounter].setLastName(lastName);
+    bookMark.users[bookMark.userCounter].setID(ID);
+    bookMark.incrementUser(bookMark.userCounter);
+        cout << "\nUser added successfully."<<endl;
+        main();
 
 }
-else {
-	cout<<"You have reached the maximum number of users that can be added!"<<endl;
-	main();
-}
+	else {
+		cout<<"You have reached the maximum number of users that can be added!"<<endl;
+		main();
+	}
 }
 
-void editUser(int userCounter) {
-string editjmbg, JMBG,firstName,lastName,choice;
-cout << "EDIT USER\n\n";
-if(userCounter==0){
+void Bookmark::editUser(int userCounter) {
+    string editId, ID,firstName,lastName,choice;
+    	cout << "EDIT USER\n\n";
+    if(bookMark.userCounter==0){
 		cout<<"There are no users to edit!"<<endl;
 		main();
 	}
-	cout<<"Enter JMBG: ";
-	cin>>editjmbg;
+		cout<<"Enter JMBG: ";
+		cin>>editId;
 
-for (int i = 0; i < userCounter; i++) {
-    if (users[i].getJMBG() == editjmbg) {
-  cout<<"User found!\n\n";
-  cout<<"JMBG: "<<users[i].getJMBG()<<endl;
-			cout<<"First name: "<<users[i].getFirstName()<<endl;
-			cout<<"Last name: "<<users[i].getLastName()<<endl;
+    for (int i = 0; i < bookMark.userCounter; i++) {
+        if (bookMark.users[i].getID() == editId) {
+            cout<<"User found!\n\n";
+            cout<<"ID: "<<bookMark.users[i].getID()<<endl;
+			cout<<"First name: "<<bookMark.users[i].getFirstName()<<endl;
+			cout<<"Last name: "<<bookMark.users[i].getLastName()<<endl;
 			cout<<"\nDo you want to edit?\n[1]Yes\n[2]No\n\nEnter choice: ";
 			cin>>choice;
 			if(choice=="1"){
-
 				cout<<"- First name: ";
 				cin>>firstName;
 				cout<<"- Prezime: ";
 				cin>>lastName;
-				while(JMBG.length() != 13) {
-            cout<<"- Enter JMBG: ";
-            cin>>JMBG;
+			while(ID.length() != 13) {
+            	cout<<"- Enter ID: ";
+            	cin>>ID;
 
-            if(JMBG.length() != 13) {
-                cout<<"JMBG must have 13 digits"<<endl;
-                cout<<"Enter JMBG again: ";
-                cin>>JMBG;
-            }
-            users[i].setFirstName(firstName);
-            users[i].setLastName(lastName);
-            users[i].setJMBG(JMBG);
-            cout<<"User edited successfully!"<<endl;
-            main();
-        }
+            if(ID.length() != 13) {
+                cout<<"ID must have 13 digits"<<endl;
+			}
+			
+            bookMark.users[i].setFirstName(firstName);
+            bookMark.users[i].setLastName(lastName);
+            bookMark.users[i].setID(ID);
+                cout<<"User edited successfully!"<<endl;
+                main();
+        	}
     } else {
     	main();
+	  }
+
+		}
+	}
+	cout<<"\n User not found."<<endl;
+	main();
 	}
 
-}
-}
-cout<<"\n User not found."<<endl;
-main();
-}
-void viewAllUsers(int userCounter) {
-cout << "VIEW ALL USERS\n\n";
-if(userCounter==0) {
+void Bookmark::viewAllUsers(int userCounter) {
+    cout << "VIEW ALL USERS\n\n";
+    if(bookMark.userCounter==0) {
 			cout<<"There are currently no users added."<<endl;
 			main();
 		}
-for (int i = 0; i < userCounter; i++) {
-	cout<<"User details\n\n";
-    cout << "First name: " << users[i].getFirstName() << endl;
-    cout << "Last name: " << users[i].getLastName() << endl;
-    cout << "JMBG: " << users[i].getJMBG() << endl;
+    for (int i = 0; i < userCounter; i++) {
+        cout<<"User details\n\n";
+        cout << "First name: " << bookMark.users[i].getFirstName() << endl;
+        cout << "Last name: " << bookMark.users[i].getLastName() << endl;
+        cout << "ID: " << bookMark.users[i].getID() << endl;
 
+	}
+	main();
 }
-main();
-}
-void deleteUser(int userCounter) {
-string JMBG;
-int choice;
-cout << "DELETE USER\n\n";
-if(userCounter==0){
+void Bookmark::deleteUser(int userCounter) {
+    string ID;
+    int choice;
+    	cout << "DELETE USER\n\n";
+    if(userCounter==0){
 		cout<<"There are no users to delete!";
 		main();
 	}
-cout << "Enter JMBG: ";
-cin >> JMBG;
+    	cout << "Enter ID: ";
+    	cin >> ID;
 
 
 for (int i = 0; i < userCounter; i++) {
-    if (users[i].getJMBG() == JMBG) {
+    if (bookMark.users[i].getID() == ID) {
         cout<<"\nUser found\n\n";
         cout<<"Do you want delete?\n[1]Yes\n[2]No\n\nEnter choice: ";
         cin>>choice;
         if(choice==1) {
-        	users[i].setFirstName("");
-        	users[i].setLastName("");
-        	users[i].setJMBG("");
+        	bookMark.users[i].setFirstName("");
+        	bookMark.users[i].setLastName("");
+        	bookMark.users[i].setID("");
         	for(int j=i;j<userCounter;j++) {
-        		users[j]=users[j+1];
+        		bookMark.users[j]=bookMark.users[j+1];
 			}
-			users[9].setFirstName("");
-			users[9].setLastName("");
-			users[9].setJMBG("");
-			decrement1(userCounter);
+		    bookMark.users[9].setFirstName("");
+			bookMark.users[9].setLastName("");
+			bookMark.users[9].setID("");
+			bookMark.decrementUser(bookMark.userCounter);
 			cout<<"User successfully deleted.";
 			main();
 		}
@@ -345,42 +319,38 @@ for (int i = 0; i < userCounter; i++) {
 		}
     }
 }
-cout<<"\nUser not found!";
-main();
+	cout<<"\nUser not found!";
+	main();
 
 
 
 }
 
 
-void addBook(int bookCounter) {
-string ISBN, title, author, publisher, categories;
-cout << "ADD BOOK\n\n";
+void Bookmark::addBook(int bookCounter) {
+    string ISBN, title, author, publisher, categories;
+    cout << "ADD BOOK\n\n";
 if(bookCounter<10) {
-while(ISBN.length() != 5) {
+	while(ISBN.length() != 5) {
             cout<<"- Enter ISBN: ";
             cin>>ISBN;
             if(ISBN.length() != 5) {
-                cout<< "Isbn mora biti jednak 5 karaktera..";
+                cout<< "ISBN must be equal to 5 characters..\n";
             }
         }
-cin.ignore();
-cout << "Enter title: ";
-getline(cin, title);
-cout << "Enter author: ";
-getline(cin, author);
-cout << "Enter publisher: ";
-getline(cin, publisher);
-cout << "Enter categories: ";
-getline(cin, categories);
+    cin.ignore();
+    cout << "Enter title: ";
+    getline(cin, title);
+    cout << "Enter author: ";
+    getline(cin, author);
+    cout << "Enter publisher: ";
+    getline(cin, publisher);
+    cout << "Enter categories: ";
+    getline(cin, categories);
 
-books[bookCounter].setISBN(ISBN);
-books[bookCounter].setTitle(title);
-books[bookCounter].setAuthor(author);
-books[bookCounter].setPublisher(publisher);
-books[bookCounter].setCategories(categories);
-increment(bookCounter);
-cout << "\nBook added successfully.";
+    bookMark.books[bookCounter].updateBook(ISBN, title, author, publisher, categories);
+    bookMark.incrementBook(bookMark.bookCounter);
+    cout << "\nBook added successfully.";
 
 main();
 } else {
@@ -388,30 +358,30 @@ main();
 	main();
 }
 }
-void deleteBook(int bookCounter) {
-string ISBN;
-int choice;
-cout << "DELETE BOOK\n\n";
+void Bookmark::deleteBook(int bookCounter) {
+    string ISBN;
+    int choice;
+    cout << "DELETE BOOK\n\n";
 if(bookCounter==0) {
 	cout<<"NO BOOK TO DELETE!";
 	main();
 }
-cout << "Enter ISBN: ";
-cin >> ISBN;
+    cout << "Enter ISBN: ";
+    cin >> ISBN;
 
 
 for (int i = 0; i < bookCounter; i++) {
-    if (books[i].getISBN() == ISBN) {
+    if (bookMark.books[i].isEqualTo(ISBN)) {
         cout<<"\nBook found\n\n";
         cout<<"Do you want to delete?\n[1]Yes\n[2]No\nEnter choice: ";
         cin>>choice;
         if(choice==1) {
-            books[i].clearBook();
+            bookMark.books[i].clearBook();
         	for(int a=i;a<bookCounter;a++) {
-        		books[a]=books[a+1];
+        		bookMark.books[a]=bookMark.books[a+1];
 			}
-			books[9].clearBook();
-			decrement(bookCounter);
+			bookMark.books[9].clearBook();
+			bookMark.decrementBook(bookMark.bookCounter);
 			cout<<"The book was successfully deleted.";
 
 			main();
@@ -426,53 +396,49 @@ for (int i = 0; i < bookCounter; i++) {
 
 
 }
-void editBook(int bookCounter) {
+void Bookmark::editBook(int bookCounter) {
 
-string ISBN, title, author, publisher, categories;
-string editIsbn,choice;
-cout << "EDIT BOOK\n\n";
+    string ISBN, title, author, publisher, categories;
+    string editIsbn,choice;
+    cout << "EDIT BOOK\n\n";
 if(bookCounter==0) {
 	cout<<"There is no book to edit.\n\n";
 	main();
 }
-cout << "Enter ISBN: ";
-cin >> editIsbn;
+    cout << "Enter ISBN: ";
+    cin >> editIsbn;
 
 for (int i = 0; i < bookCounter; i++) {
-    if (books[i].getISBN() == editIsbn) {
+    if (bookMark.books[i].getISBN() == editIsbn) {
     	cout<<"Book found!\n\n";
-    	cout<<"ISBN: "<<books[i].getISBN()<<endl;
-    	cout<<"Title: "<<books[i].getTitle()<<endl;
-    	cout<<"Author: "<<books[i].getAuthor()<<endl;
-    	cout<<"Publisher: "<<books[i].getPublisher()<<endl;
-    	cout<<"Categories: "<<books[i].getCategories()<<endl;
+    	cout<<"ISBN: "<<bookMark.books[i].getISBN()<<endl;
+    	cout<<"Title: "<<bookMark.books[i].getTitle()<<endl;
+    	cout<<"Author: "<<bookMark.books[i].getAuthor()<<endl;
+    	cout<<"Publisher: "<<bookMark.books[i].getPublisher()<<endl;
+    	cout<<"Categories: "<<bookMark.books[i].getCategories()<<endl;
         cout<<"\nDo you want to edit?\n[1]Yes\n[2]No\nEnter choice: ";
         cin>>choice;
         if(choice=="1") {
         	while(ISBN.length() != 5) {
-        		cout<<"-Enter ISBN: ";
+        		cout<<"Enter ISBN: ";
         		cin>>ISBN;
 
         		if(ISBN.length() != 5) {
-        			cout<<"ISBN must have 5 digits."<<endl;
-        			cout<<"Enter ISBN again: ";
-        			cin>>ISBN;
+        			cout<<"ISBN must have 5 digits.\n"<<endl;
+
 				}
 			}
+			cin.ignore();
 			cout<<"-Title: ";
-			cin>>title;
+			getline(cin, title);
 			cout<<"-Author: ";
-			cin>>author;
+			getline(cin, author);
 			cout<<"-Publisher: ";
-			cin>>publisher;
+			getline(cin, publisher);
 			cout<<"-Categories: ";
-			cin>>categories;
+			getline(cin, publisher);
 
-			books[i].setISBN(ISBN);
-			books[i].setTitle(title);
-			books[i].setAuthor(author);
-			books[i].setPublisher(publisher);
-			books[i].setCategories(categories);
+			bookMark.books[i].updateBook(ISBN, title, author, publisher, categories);
 			cout<<"\nThe book has been successfully edited.";
 			main();
 		} else {
@@ -480,28 +446,28 @@ for (int i = 0; i < bookCounter; i++) {
 		}
     }
 }
-cout<<"\nBook not found.";
-main();
+    cout<<"\nBook not found.";
+    main();
 
 }
-void searchBook(int bookCounter) {
-string ISBN;
-int choice;
-bool print=false;
+void Bookmark::searchBook(int bookCounter) {
+    string ISBN;
+    int choice;
+    bool print=false;
 
-cout << "SEARCH BOOK\n\n";
+    cout << "SEARCH BOOK\n\n";
 if(bookCounter==0) {
 	cout<<"There is no book to search.";
 	main();
 }
-cout << "Enter ISBN: ";
-cin >> ISBN;
+    cout << "Enter ISBN: ";
+    cin >> ISBN;
 for (int i = 0; i < bookCounter; i++) {
-    if (books[i].getISBN() == ISBN) {
-        cout << "Title: " << books[i].getTitle() << endl;
-        cout << "Author: " << books[i].getAuthor() << endl;
-        cout << "Publisher: " << books[i].getPublisher() << endl;
-        cout << "Categories: " << books[i].getCategories() << endl;
+    if (bookMark.books[i].isEqualTo(ISBN)) {
+        cout << "Title: " << bookMark.books[i].getTitle() << endl;
+        cout << "Author: " << bookMark.books[i].getAuthor() << endl;
+        cout << "Publisher: " << bookMark.books[i].getPublisher() << endl;
+        cout << "Categories: " << bookMark.books[i].getCategories() << endl;
         cout << endl;
         print = true;
     }
@@ -516,7 +482,7 @@ if (print) {
 	main();
 }
 }
-void viewAllBooks(int bookCounter) {
+void Bookmark::viewAllBooks(int bookCounter) {
 	if(bookCounter==0) {
 		cout<<"There are currently no books added.";
 		main();
@@ -524,16 +490,61 @@ void viewAllBooks(int bookCounter) {
 
 for (int i = 0; i < bookCounter; i++) {
 	cout << "VIEW ALL BOOKS\n\n";
-    cout << "ISBN: " << books[i].getISBN() << endl;
-    cout << "Title: " << books[i].getTitle() << endl;
-    cout << "Author: " << books[i].getAuthor() << endl;
-    cout << "Publisher: " << books[i].getPublisher() << endl;
-    cout << "Categories: " << books[i].getCategories() << endl;
+    cout << "ISBN: " << bookMark.books[i].getISBN() << endl;
+    cout << "Title: " << bookMark.books[i].getTitle() << endl;
+    cout << "Author: " << bookMark.books[i].getAuthor() << endl;
+    cout << "Publisher: " << bookMark.books[i].getPublisher() << endl;
+    cout << "Categories: " << bookMark.books[i].getCategories() << endl;
     cout << endl;
 }
 
 main();
 }
+void Bookmark::displayTopBooks() {
+	string book1 = "Anna Karenina";
+    string book2 = "Madame Bovary";
+    string book3 = "War and Peace";
+    string book4 = "The Great Gatsby";
+    string book5 = "Lolita";
+    string book6 = "Middlemarch";
+    string book7 = "The alchemist";
+    string book8 = "The Adventures of Huckleberry Finn";
+    string book9 = "The Stories of Anton Chekhov";
+    string book10 = "Hamlet";
+
+    
+    string books[] = { book1, book2, book3, book4, book5, book6, book7, book8, book9, book10 };
+
+    
+    srand(time(0)); 
+    int n = sizeof(books) / sizeof(books[0]);
+    int index1 = rand() % n;
+    int index2 = rand() % n;
+    int index3 = rand() % n;
+    int index4 = rand() % n;
+    int index5 = rand() % n;
+    int index6 = rand() % n;
+    int index7 = rand() % n;
+    int index8 = rand() % n;
+    int index9 = rand() % n;
+    int index10 = rand() % n;
+
+    
+    while (index2 == index1) {
+        index2 = rand() % n;
+    }
+    while (index3 == index1 || index3 == index2) {
+        index3 = rand() % n;
+    }
+
+    
+    cout << "Top 3 books of the week" << endl;
+    cout << "1. " << books[index1] << endl;
+    cout << "2. " << books[index2] << endl;
+    cout << "3. " << books[index3] << endl; 
+}
+
+
 
 
 
