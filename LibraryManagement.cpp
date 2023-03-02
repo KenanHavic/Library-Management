@@ -295,8 +295,8 @@ for (int i = 0; i < userCounter; i++) {
 		    bookMark.users[9].setFirstName("");
 			bookMark.users[9].setLastName("");
 			bookMark.users[9].setID("");
-			bookMark.decrementUser(bookMark.userCounter);
-			cout<<"User successfully deleted.";
+			bookMark.decrementUser();
+			cout<<"User successfully deleted.\n";
 			main();
 		}
 		else {

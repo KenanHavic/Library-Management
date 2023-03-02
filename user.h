@@ -7,10 +7,9 @@ using namespace std;
 
 class User {
         private:
-            string firstName, lastName;
-            string ID;
-
-        public:
+            string firstName, lastName,ID;
+            
+		public:
         	void setFirstName(string firstName) { this->firstName=firstName; }
         	void setLastName(string lastName) { this->lastName=lastName; }
         	void setID(string ID) { this->ID=ID; }
