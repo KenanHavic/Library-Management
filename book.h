@@ -8,6 +8,7 @@ using namespace std;
 class Book {
         private:
             string ISBN, title, author, publisher, categories;
+            
 
         public:
             void setISBN(string ISBN) { this->ISBN = ISBN; }
@@ -39,11 +40,5 @@ class Book {
 
 };
 #endif
-
-
-
-
-
-
 
 

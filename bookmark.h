@@ -7,19 +7,24 @@
 using namespace std;
 class Bookmark {
         public:
-        	Book books[10];
-    		User users[10];
+        	Book books[20];
+    		User users[20];
+
+            void displayMainMenu();
             void addUser(int userCounter);
             void editUser(int userCounter);
             void viewAllUsers(int userCounter);
             void deleteUser(int userCounter);
-
             void addBook(int userCounter);
             void deleteBook(int userCounter);
             void editBook(int userCounter);
             void searchBook(int userCounter);
             void viewAllBooks(int userCounter);
-            void displayTopBooks();
+            void addDefaultBooks();
+            void borrowBook();
+            
+			void displayTopBooks();
+           
 
 
 
@@ -42,7 +47,6 @@ class Bookmark {
     void decrementUser(int counterUser){
         userCounter= --counterUser;
 	}
-	
 
 
 
