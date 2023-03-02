@@ -9,17 +9,16 @@ class Bookmark {
         public:
         	Book books[10];
     		User users[10];
-            void displayMainMenu();
-            void addUser(int userCounter);
-            void editUser(int userCounter);
-            void viewAllUsers(int userCounter);
-            void deleteUser(int userCounter);
+            void addUser();
+            void editUser();
+            void viewAllUsers();
+            void deleteUser();
 
-            void addBook(int bookCounter);
-            void deleteBook(int bookCounter);
-            void editBook(int bookCounter);
-            void searchBook(int bookCounter);
-            void viewAllBooks(int bookCounter);
+            void addBook();
+            void deleteBook();
+            void editBook();
+            void searchBook();
+            void viewAllBooks();
             void displayTopBooks();
 
 
@@ -28,25 +27,25 @@ class Bookmark {
     int userCounter = 0;
 
 
-    void incrementBook(int counterBook) {
-        bookCounter = ++counterBook;
+    void incrementBook() {
+        bookCounter++;
     }
 
-    void incrementUser(int counterUser) {
-        userCounter= ++counterUser;
+    void incrementUser() {
+        userCounter++;
     }
 
-    void decrementBook(int counterBook) {
-        bookCounter = --counterBook;
+    void decrementBook() {
+        bookCounter--;
     }
 
     void decrementUser(int counterUser){
-        userCounter= --counterUser;
+        userCounter--;
 	}
 
 
 
-    
+
 
 
 

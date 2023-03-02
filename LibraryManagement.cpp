@@ -48,16 +48,16 @@ int main() {
         			cin>>selection;
         		switch(selection) {
         			case 1:
-        				bookMark.addUser(bookMark.userCounter);
+        				bookMark.addUser();
         				break;
         			case 2:
-            			bookMark.deleteUser(bookMark.userCounter);
+            			bookMark.deleteUser();
             			break;
         			case 3:
-            			bookMark.editUser(bookMark.userCounter);
+            			bookMark.editUser();
             			break;
         			case 4:
-            			bookMark.viewAllUsers(bookMark.userCounter);
+            			bookMark.viewAllUsers();
             			break;
         			case 5:
             			quit=true;
@@ -80,19 +80,19 @@ int main() {
             		cin>>choice;
             	switch(choice) {
         			case 1:
-            			bookMark.addBook(bookMark.bookCounter);
+            			bookMark.addBook();
             			break;
         			case 2:
-            			bookMark.deleteBook(bookMark.bookCounter);
+            			bookMark.deleteBook();
             			break;
         			case 3:
-            			bookMark.editBook(bookMark.bookCounter);
+            			bookMark.editBook();
             			break;
         			case 4:
-            			bookMark.searchBook(bookMark.bookCounter);
+            			bookMark.searchBook();
             			break;
         			case 5:
-            			bookMark.viewAllBooks(bookMark.bookCounter);
+            			bookMark.viewAllBooks();
         			case 6:
             			quit=true;
             			break;
@@ -132,7 +132,7 @@ int main() {
                 	cin>>selection;
                 switch(selection) {
             		case 1:
-                		bookMark.viewAllUsers(bookMark.userCounter);
+                		bookMark.viewAllUsers();
                 		break;
             		case 2:
                 		quit=true;
@@ -151,7 +151,7 @@ int main() {
                 	cin>>choice;
                 switch(choice) {
             		case 1:
-                		bookMark.viewAllBooks(bookMark.bookCounter);
+                		bookMark.viewAllBooks();
                 		break;
             		case 2:
                 		quit=true;
@@ -176,7 +176,7 @@ int main() {
 
 
 
-void Bookmark::addUser(int userCounter) {
+void Bookmark::addUser() {
     string firstName, lastName, ID;
     if(userCounter < 10) {
 		cout << "ADD USER\n\n";
@@ -195,7 +195,7 @@ void Bookmark::addUser(int userCounter) {
     bookMark.users[bookMark.userCounter].setFirstName(firstName);
     bookMark.users[bookMark.userCounter].setLastName(lastName);
     bookMark.users[bookMark.userCounter].setID(ID);
-    bookMark.incrementUser(bookMark.userCounter);
+    bookMark.incrementUser();
         cout << "\nUser added successfully."<<endl;
         main();
 
@@ -206,7 +206,7 @@ void Bookmark::addUser(int userCounter) {
 	}
 }
 
-void Bookmark::editUser(int userCounter) {
+void Bookmark::editUser() {
     string editId, ID,firstName,lastName,choice;
     	cout << "EDIT USER\n\n";
     if(bookMark.userCounter==0){
@@ -236,7 +236,7 @@ void Bookmark::editUser(int userCounter) {
             if(ID.length() != 13) {
                 cout<<"ID must have 13 digits"<<endl;
 			}
-			
+
             bookMark.users[i].setFirstName(firstName);
             bookMark.users[i].setLastName(lastName);
             bookMark.users[i].setID(ID);
@@ -253,7 +253,7 @@ void Bookmark::editUser(int userCounter) {
 	main();
 	}
 
-void Bookmark::viewAllUsers(int userCounter) {
+void Bookmark::viewAllUsers() {
     cout << "VIEW ALL USERS\n\n";
     if(bookMark.userCounter==0) {
 			cout<<"There are currently no users added."<<endl;
@@ -268,7 +268,7 @@ void Bookmark::viewAllUsers(int userCounter) {
 	}
 	main();
 }
-void Bookmark::deleteUser(int userCounter) {
+void Bookmark::deleteUser() {
     string ID;
     int choice;
     	cout << "DELETE USER\n\n";
@@ -312,7 +312,7 @@ for (int i = 0; i < userCounter; i++) {
 }
 
 
-void Bookmark::addBook(int bookCounter) {
+void Bookmark::addBook() {
     string ISBN, title, author, publisher, categories;
     cout << "ADD BOOK\n\n";
 if(bookCounter<10) {
@@ -334,7 +334,7 @@ if(bookCounter<10) {
     getline(cin, categories);
 
     bookMark.books[bookCounter].updateBook(ISBN, title, author, publisher, categories);
-    bookMark.incrementBook(bookMark.bookCounter);
+    bookMark.incrementBook();
     cout << "\nBook added successfully.";
 
 main();
@@ -343,7 +343,7 @@ main();
 	main();
 }
 }
-void Bookmark::deleteBook(int bookCounter) {
+void Bookmark::deleteBook() {
     string ISBN;
     int choice;
     cout << "DELETE BOOK\n\n";
@@ -366,7 +366,7 @@ for (int i = 0; i < bookCounter; i++) {
         		bookMark.books[a]=bookMark.books[a+1];
 			}
 			bookMark.books[9].clearBook();
-			bookMark.decrementBook(bookMark.bookCounter);
+			bookMark.decrementBook();
 			cout<<"The book was successfully deleted.";
 
 			main();
@@ -381,7 +381,7 @@ for (int i = 0; i < bookCounter; i++) {
 
 
 }
-void Bookmark::editBook(int bookCounter) {
+void Bookmark::editBook() {
 
     string ISBN, title, author, publisher, categories;
     string editIsbn,choice;
@@ -435,7 +435,7 @@ for (int i = 0; i < bookCounter; i++) {
     main();
 
 }
-void Bookmark::searchBook(int bookCounter) {
+void Bookmark::searchBook() {
     string ISBN;
     int choice;
     bool print=false;
@@ -465,7 +465,7 @@ for (int i = 0; i < bookCounter; i++) {
 		main();
 	  }
 }
-void Bookmark::viewAllBooks(int bookCounter) {
+void Bookmark::viewAllBooks() {
 	if(bookCounter==0) {
 		cout<<"There are currently no books added.";
 		main();
