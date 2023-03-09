@@ -13,6 +13,8 @@ class Bookmark {
 public:
 	Book books[20];
 	User users[20];
+	void registerNewUser();
+	void loginUser();
     void addUser();
     void editUser();
     void viewAllUsers();
@@ -65,18 +67,29 @@ public:
     }
     
     bool registerUser(const string& username, const string& password) {
-        ifstream file("users.txt");
-        if (file.is_open()) {
-            string existingUsername, existingPassword;
-            while (file >> existingUsername >> existingPassword) {
-                if (existingUsername == username) {
-                    file.close();
-                    return false;
-                }
+    ifstream file("users.txt");
+    if (file.is_open()) {
+        string existingUsername, existingPassword;
+        while (file >> existingUsername >> existingPassword) {
+            if (existingUsername == username) {
+                file.close();
+                return false;
             }
-            file.close();
         }
+        file.close();
     }
+
+    ofstream outfile("users.txt", ios_base::app);
+    if (outfile.is_open()) {
+        outfile << username << " " << password << endl;
+        outfile.close();
+    } else {
+        cout << "Error: cannot write to file" << endl;
+        return false;
+    }
+    return true;
+}
+
 };
 #endif
 

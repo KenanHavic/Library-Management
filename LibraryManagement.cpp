@@ -30,42 +30,12 @@ int main() {
 
     switch (choose) {
        case 1:
-    do {
-        cout << "Enter username: ";
-        cin >> username;
-        cout << "Enter password: ";
-        cin >> password;
-        if (bookMark.isAlreadyRegistered(username, password)) {
-            cout << "Login successful" << endl;
-            
-            break;
-        } else {
-            cout << "Incorrect username or password!" << endl;
-            cout << "Press 'y' to try again: ";
-            char tryAgain;
-            cin >> tryAgain;
-            tryAgain=tolower(tryAgain);
-            if (tryAgain != 'y') {
-            	exit(0);
-                break;
-            }
-        }
-    } while (true);
-    	break;
+    	bookMark.loginUser();
+        break;
 
         case 2:
-            cout << "Enter username: ";
-                cin >> username;
-                cout << "Enter password: ";
-                cin >> password;
-
-                if (bookMark.registerUser(username, password)) {
-                    cout << "You are successfully registered" << endl;
-                } else {
-                    cout << "Error: username already exists." << endl;
-                    exit(0);
-                }
-                break;
+           bookMark.registerNewUser();
+            break;
 
         case 3:
         	cout<<"\nThanks for using our library management\n";
@@ -218,11 +188,56 @@ int main() {
 	 	}
 		return 0;
 		}
+		
+void Bookmark::registerNewUser() {
+	string username,password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+
+    if (bookMark.registerUser(username, password)) {
+        cout << "You are successfully registered" << endl;
+        
+    } else {
+        cout << "Error: username already exists." << endl;
+        exit(0);
+    }
+}
+
+		
+void Bookmark::loginUser() {
+    string username, password;
+    do {
+        cout << "Enter username: ";
+        cin >> username;
+        cout << "Enter password: ";
+        cin >> password;
+        if (bookMark.isAlreadyRegistered(username, password)) {
+            cout << "Login successful" << endl;
+            break;
+        } else {
+            cout << "Incorrect username or password!" << endl;
+            cout << "Press 'y' to try again: ";
+            char tryAgain;
+            cin >> tryAgain;
+            tryAgain = tolower(tryAgain);
+            if (tryAgain != 'y') {
+                exit(0);
+                break;
+            }
+        }
+    } while (true);
+}
+		
 
 	
 void Bookmark::addUser() {
     string firstName, lastName, ID;
-    if(userCounter < 20) {
+    if(userCounter > 20) { 
+    	cout<<"Max users reached...\n";
+    	return;
+    }
         cout << "ADD USER\n\n";
         cout << "Enter first name: ";
         cin >> firstName;
@@ -235,15 +250,11 @@ void Bookmark::addUser() {
                 cout<<"ID must have 13 digits"<<endl;
             }
         }
-		bookMark.users[bookMark.userCounter].setFirstName(firstName);
-        bookMark.users[bookMark.userCounter].setLastName(lastName);
-        bookMark.users[bookMark.userCounter].setID(ID);
-        bookMark.incrementUser();
+        bookMark.users[userCounter].updateUser(firstName, lastName, ID);
+		bookMark.incrementUser();
         cout << "\nUser added successfully." << endl;
-    } else {
-        cout << "You have reached the maximum number of users that can be added!" << endl;
-      }
-	}
+    } 
+	
 	
 void Bookmark::editUser() {
     string editId, ID,firstName,lastName,choice;
@@ -275,10 +286,7 @@ void Bookmark::editUser() {
             if(ID.length() != 13) {
                 cout<<"ID must have 13 digits"<<endl;
 			}
-
-            bookMark.users[i].setFirstName(firstName);
-            bookMark.users[i].setLastName(lastName);
-            bookMark.users[i].setID(ID);
+				bookMark.users[i].updateUser(firstName, lastName, ID);           
                 cout<<"User edited successfully!"<<endl;
                 main();
         	}
@@ -298,69 +306,69 @@ void Bookmark::viewAllUsers() {
 			cout<<"There are currently no users added."<<endl;
 			main();
 		}
-    for (int i = 0; i < userCounter; i++) {
+    for (int i = 0; i < bookMark.userCounter; i++) {
         cout<<"User details\n\n";
         cout << "First name: " << bookMark.users[i].getFirstName() << endl;
         cout << "Last name: " << bookMark.users[i].getLastName() << endl;
         cout << "ID: " << bookMark.users[i].getID() << endl;
 
 	}
-	main();
+	menu.displayMainMenu();
 }
 void Bookmark::deleteUser() {
     string ID;
     int choice;
-    	cout << "DELETE USER\n\n";
-    if(userCounter==0){
-		cout<<"There are no users to delete!";
-		main();
-	}
-    	cout << "Enter ID: ";
-    	cin >> ID;
+    bool found = false;
 
+    cout << "DELETE USER\n\n";
 
-for (int i = 0; i < userCounter; i++) {
-    if (bookMark.users[i].getID() == ID) {
-        cout<<"\nUser found\n\n";
-        cout<<"Do you want delete?\n[1]Yes\n[2]No\n\nEnter choice: ";
-        cin>>choice;
-        if(choice==1) {
-        	bookMark.users[i].setFirstName("");
-        	bookMark.users[i].setLastName("");
-        	bookMark.users[i].setID("");
-        	for(int j=i;j<userCounter;j++) {
-        		bookMark.users[j]=bookMark.users[j+1];
-			}
-		    bookMark.users[9].setFirstName("");
-			bookMark.users[9].setLastName("");
-			bookMark.users[9].setID("");
-			bookMark.decrementUser();
-			cout<<"User successfully deleted.";
-			main();
-		}
-		else {
-			main();
-		}
+    if (userCounter == 0) {
+        cout << "There are no users to delete!" << endl;
+        return;
+    }
+
+    cout << "Enter ID: ";
+    cin >> ID;
+
+    for (int i = 0; i < userCounter; i++) {
+        if (bookMark.users[i].getID() == ID) {
+            found = true;
+            cout << "\nUser found\n\n";
+            cout << "Do you want delete?\n[1]Yes\n[2]No\n\nEnter choice: ";
+            cin >> choice;
+            if (choice == 1) {
+                bookMark.users[i].updateUser("", "", "");
+                for (int j = i; j < userCounter - 1; j++) {
+                    bookMark.users[j] = bookMark.users[j + 1];
+                }
+                bookMark.users[userCounter - 1].updateUser("", "", "");
+                bookMark.decrementUser();
+                cout << "User successfully deleted." << endl;
+            }
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "\nUser not found!" << endl;
     }
 }
-	cout<<"\nUser not found!";
-	main();
 
-
-
-}
 
 void Bookmark::addBook() {
     string ISBN, title, author, publisher, categories;
     cout << "ADD BOOK\n\n";
-if(bookCounter < 20) {
-	while(ISBN.length() != 5) {
-            cout<<"- Enter ISBN: ";
-            cin>>ISBN;
-            if(ISBN.length() != 5) {
-                cout<< "ISBN must be equal to 5 characters..\n";
-            }
-        }
+if(bookCounter > 20) {
+	cout<<"YOU HAVE REACHED THE MAXIMUM NUMBER OF BOOKS THAT CAN BE ADDED!";
+	return;
+}
+while(ISBN.length() != 5) {
+    cout<<"- Enter ISBN: ";
+    cin>>ISBN;
+    if(ISBN.length() != 5) {
+    cout<< "ISBN must be equal to 5 characters..\n";
+    }
+}
     cin.ignore();
     cout << "Enter title: ";
     getline(cin, title);
@@ -370,16 +378,12 @@ if(bookCounter < 20) {
     getline(cin, publisher);
     cout << "Enter categories: ";
     getline(cin, categories);
-
     bookMark.books[bookCounter].updateBook(ISBN, title, author, publisher, categories);
     bookMark.incrementBook();
     cout << "\nBook added successfully.";
 	main();
-} else {
-	cout<<"YOU HAVE REACHED THE MAXIMUM NUMBER OF BOOKS THAT CAN BE ADDED!";
-	main();
-  }	
-}
+} 
+
 void Bookmark::deleteBook() {
     string ISBN;
     int choice;
@@ -405,12 +409,12 @@ for (int i = 0; i < bookCounter; i++) {
 			cout<<"The book was successfully deleted.";
 			main();
 		} else {
-			main();
+			menu.displayMainMenu();
 		  }
     }
 }
     cout<<"\nBook not found.";
-    main();
+    menu.displayMainMenu();
 }
 
 void Bookmark::editBook() {
