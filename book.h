@@ -8,8 +8,8 @@ using namespace std;
 class Book {
         private:
             string ISBN, title, author, publisher, categories;
-
-        public:
+            
+		public:
             void setISBN(string ISBN) { this->ISBN = ISBN; }
             void setTitle(string title) { this->title = title; }
             void setAuthor(string author) { this->author=author; }
@@ -37,13 +37,9 @@ class Book {
                     setCategories(categories);
     		}
 
+            
+
 };
 #endif
-
-
-
-
-
-
 
 
