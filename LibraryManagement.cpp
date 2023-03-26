@@ -9,21 +9,17 @@
 #include "user.h"
 #include "bookmark.h"
 #include "Menu.h"
+#include "constants.h"
 using namespace std;
 Menu menu;
 int main() {
     bool shouldLeaveApp = false;
     Bookmark *bookmark = new Bookmark();
     bookmark->addDefaultBooks();
-    int choose;
     string username,password;
-    cout << "Welcome to our program!\n";
-    cout << "[1] Login\n";
-    cout << "[2] Register\n";
-    cout << "[3] Quit\n";
-    cout << "Enter selection: ";
-    cin >> choose;
-    switch (choose) {
+    menu.loginMenu();
+    int choice = bookmark->askAndGetUserSelection();
+    switch (choice) {
         case 1:
            bookmark->loginUser();
            break;
@@ -38,8 +34,6 @@ int main() {
            cout << "Wrong selection" << endl;
            break;
     }
-    const char PREMIUM_USER = 'p';
-    const char REGULAR_USER = 'r';
     char enteredUserType;
     cout << "Select user type(P for premium, R for regular): ";
     cin >> enteredUserType;
@@ -48,11 +42,11 @@ int main() {
         cout << "Welcome, "<< username << "!" << endl;
         cout << "You are a premium user." << endl;
         menu.displayMainMenu();
-        cin >> choose;
+        cin >> choice;
         do {
-            switch (choose) {
+            switch (choice) {
                 case 1:
-                    menu.userOptions();
+                    menu.displayUserOptions();
                     int selection;
                     cout << "Enter selection: ";
                     cin >> selection;
@@ -78,11 +72,11 @@ int main() {
                     }
                     break;
                 case 2:
-                    menu.bookOptions();
-                    int choice;
+                    menu.displayBookOptions();
+                    int choose;
                     cout << "Enter selection: ";
-                    cin >> choice;
-                    switch(choice) {
+                    cin >> choose;
+                    switch(choose) {
                         case 1:
                             bookmark->addBook();
                             break;
@@ -121,8 +115,8 @@ int main() {
         cout << "[2]BOOK\n";
         cout << "[3]EXIT\n";
         cout << "Enter selection: ";
-        cin >> choose;
-        switch (choose) {
+        cin >> choice;
+        switch (choice) {
             case 1:
                 cout << "USER\n";
                 cout << "[1]VIEW ALL USERS\n";
@@ -195,7 +189,7 @@ void Bookmark::loginUser() {
             char tryAgain;
             cin >> tryAgain;
             tryAgain = tolower(tryAgain);
-            if (tryAgain != 'y') {
+            if (tryAgain != YES_CHOICE) {
                 exit(0);
                 break;
             }
@@ -245,7 +239,7 @@ void Bookmark::editUser() {
         if (choice == "1") {
             cout << "- First name: ";
             cin >> firstName;
-            cout << "- Prezime: ";
+            cout << "- Last name: ";
             cin >> lastName;
             while (this->isValidID(ID)) {
                 cout << "- Enter ID: ";
@@ -501,6 +495,7 @@ void Bookmark::addDefaultBooks() {
     books[8].updateBook("88888", "The Stories of Anton Chekhov", "F. Scott Fitzgerald", "Charles Scribner's Sons", "Fiction");
     books[9].updateBook("99999", "Hamlet", "F. Scott Fitzgerald", "Charles Scribner's Sons", "Fiction");
 }
+
 
 
     

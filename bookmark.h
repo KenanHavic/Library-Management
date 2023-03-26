@@ -102,6 +102,12 @@ class Bookmark {
         bool isValidISBN(string ISBN) {
             return ISBN.length() != 5;
         }
+        int askAndGetUserSelection() {
+            int choice;
+            cout << "Enter selection: ";
+            cin >> choice;
+            return choice;
+        }
 };
 #endif
 

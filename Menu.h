@@ -15,7 +15,7 @@ class Menu {
     		cout << "[3] EXIT\n\n";
     		cout << "ENTER SELECTION: ";
     	}
-		void userOptions() {
+		void displayUserOptions() {
 			cout << "USER\n";
             cout << "[1]ADD USER\n";
         	cout << "[2]DELETE USER\n";
@@ -23,7 +23,7 @@ class Menu {
             cout << "[4]VIEW ALL USERS\n";
             cout << "[5]EXIT\n";
 		}	
-		void bookOptions() {
+		void displayBookOptions() {
 			cout << "BOOK\n";
             cout << "[1]ADD BOOK\n";
             cout << "[2]DELETE BOOK\n";
@@ -32,6 +32,12 @@ class Menu {
             cout << "[5]VIEW ALL BOOKS\n";
             cout << "[6]TOP 3 BOOKS OF THE WEEK\n";
             cout << "[7]EXIT\n";
+		}
+		void loginMenu() {
+			cout << "Welcome to our program!\n";
+    		cout << "[1] Login\n";
+    		cout << "[2] Register\n";
+    		cout << "[3] Quit\n";
 		}
 };
 #endif

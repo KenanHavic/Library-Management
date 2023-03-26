@@ -35,9 +35,6 @@ class Book {
                     setPublisher(publisher);
                     setCategories(categories);
     		}
-
-            
-
 };
 #endif
 
