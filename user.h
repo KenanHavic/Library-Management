@@ -7,16 +7,19 @@ using namespace std;
 
 class User {
         private:
-            string firstName, lastName;
-            string ID;
-
+            string firstName, lastName,ID;
         public:
-        	void setFirstName(string firstName) { this->firstName=firstName; }
-        	void setLastName(string lastName) { this->lastName=lastName; }
+        	void setfirstName(string firstName) { this->firstName=firstName; }
+        	void setlastName(string lastName) { this->lastName=lastName; }
         	void setID(string ID) { this->ID=ID; }
-
         	string getFirstName() { return firstName; }
         	string getLastName() { return lastName; }
         	string getID() { return ID; }
+        	
+        	void updateUser(string firstName, string lastName, string ID) {
+        		setfirstName(firstName);
+                setlastName(lastName);
+                setID(ID);
+            }
 };
 #endif

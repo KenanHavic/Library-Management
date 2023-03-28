@@ -9,11 +9,35 @@ using namespace std;
 class Menu {
 	public:
 		void displayMainMenu() {
-   			cout << "LIBRARY MANAGEMENT\n\n";
+			cout << "LIBRARY MANAGEMENT\n\n";
    			cout << "[1] USER\n";
     		cout << "[2] BOOK\n";
     		cout << "[3] EXIT\n\n";
     		cout << "ENTER SELECTION: ";
+    	}
+		void displayUserOptions() {
+			cout << "USER\n";
+            cout << "[1]ADD USER\n";
+        	cout << "[2]DELETE USER\n";
+            cout << "[3]EDIT USER\n";
+            cout << "[4]VIEW ALL USERS\n";
+            cout << "[5]EXIT\n";
+		}	
+		void displayBookOptions() {
+			cout << "BOOK\n";
+            cout << "[1]ADD BOOK\n";
+            cout << "[2]DELETE BOOK\n";
+            cout << "[3]EDIT BOOK\n";
+            cout << "[4]SEARCH BOOK\n";
+            cout << "[5]VIEW ALL BOOKS\n";
+            cout << "[6]TOP 3 BOOKS OF THE WEEK\n";
+            cout << "[7]EXIT\n";
+		}
+		void loginMenu() {
+			cout << "Welcome to our program!\n";
+    		cout << "[1] Login\n";
+    		cout << "[2] Register\n";
+    		cout << "[3] Quit\n";
 		}
 };
 #endif
